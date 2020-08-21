@@ -1,6 +1,6 @@
 var express = require('express');
 const theloaiModel = require('../models/theloai.model');
-const sachModel = require('../models/sach.model');
+const sachModel = require('../models/book.model');
 const userModel = require('../models/nguoidung.model');
 const moment=require('moment')
 

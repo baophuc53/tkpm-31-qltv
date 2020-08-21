@@ -1,5 +1,5 @@
 var express = require('express');
-const sachModel = require('../models/sach.model');
+const sachModel = require('../models/book.model');
 const config = require('../config/default.json');
 var router = express.Router();
 

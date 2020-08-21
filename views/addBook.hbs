@@ -1,0 +1,61 @@
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Đăng sản phẩm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area mt-5 ">
+    <div class="container">
+        <div class="billing_details">
+            <div class=" ">
+                <h4>Nhập sách mới</h4>
+            </div>
+            <form action="/book" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="container ">
+                        <div class="col-6  ">
+                            <label class="col-12 col-form-label">Tên Sách </label>
+                            <input type="text" class="form-control" name="Tensach" required />
+                        </div>
+                        <div class="col-6 ">
+                            <label class="col-12 col-form-label">Tác giả</label>
+                            <input type="text" class="form-control" name="Tentacgia" required />
+                        </div>
+                        <div class="col-6 ">
+                            <label class="col-12 col-form-label">Năm xuất bản</label>
+                            <input type="number" class="form-control Price" min="1900" value="1900" name="Namxuatban" />
+                        </div>
+                        <div class="col-6">
+                            <label class="col-12 col-form-label">Nhà xuất bản</label>
+                            <input type="text" class="form-control" name="Nhaxuatban" />
+                        </div>
+                        <div class="col-6 form-group ">
+                            <label class="col-12 col-form-label">Thể loại</label>
+                            <select class="form-control" name="Matheloai" value="choose" required>
+                                {{#each this.theloai}}
+                                <option value="{{Matheloai}}">{{Tentheloai}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="col-12 col-form-label">Hình ảnh minh họa</label>
+                            <input type="file" name="img" />
+                        </div>
+                        <div class="col-6 d-flex justify-content-end mb-2">
+                            <button type="submit" class="btn btn-primary">Thêm sách</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+</section>
+
+{{>footer}}

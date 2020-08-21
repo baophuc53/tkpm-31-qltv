@@ -141,7 +141,7 @@
 <section class="breadcrumb breadcrumb_bg">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-sm-12">
+            <div class="col-12">
                 <div class="breadcrumb_iner">
                     <div class="breadcrumb_iner_item">
                         <p>Trang chủ/ Điện tử / Điện thoại di động</p>
@@ -156,7 +156,7 @@
 <div class="sach_image_area section_padding">
     <div class="container">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-5">
                 <div id="slideshow" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div width="300" height="400" class="carousel-item active">
@@ -184,7 +184,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-sm-5 offset-lg-1">
+            <div class="col-5 offset-lg-1">
                 <div class="s_sach_text">
                     <h2 id="sach-name">{{sach.Name}}</h2>
                     <h3>Giá hiện tại: {{Numberformat sach.Price}} VND</h3>
@@ -256,14 +256,14 @@
                     </div>
                     
                     {{#if isSelling}}
-                    <div class="col-sm-12 mt-10" id="BorrowZone">
+                    <div class="col-12 mt-10" id="BorrowZone">
                         <form id="Borrow">
-                            <div class="col-lg-6 col-sm-12">
+                            <div class="col-lg-6 col-12">
                                 <input type="number" name="Price" value="{{sach.Price}}" min="{{sach.Price}}"
                                     step="{{sach.StepPrice}}" readonly>
                                 <input name="StepPrice" value="{{sach.StepPrice}}" hidden=true>
                             </div>
-                            <div class="col-sm-12 mt-10">
+                            <div class="col-12 mt-10">
                                 {{#if isAuthenticated}}
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#BorrowDialog">Đấu giá</button>
@@ -290,10 +290,10 @@
     </div>
     <!--================End Single Sach Area =================-->
     <!-- history bidder part -->
-    <section class="col-sm-12 mt-30">
+    <section class="col-12 mt-30">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-sm-12">
+                <div class="col-12">
                     <div class="section_tittle text-center">
                         <h2>Lịch sử đấu giá</h2>
                     </div>
@@ -352,8 +352,8 @@
                         {{sach.Description}}
                     </p>
                     {{#if isMySach}}
-                    <form class="col-md-12 form-group" id="addDescription" action='/detail/{{sach.SachID}}/addDescription' method="POST">
-                        <label class="col-sm-4 col-form-label" for="txtFullDes">Mô tả</label>
+                    <form class="col-12 form-group" id="addDescription" action='/detail/{{sach.SachID}}/addDescription' method="POST">
+                        <label class="col-4 col-form-label" for="txtFullDes">Mô tả</label>
                         <textarea class="form-control" id="txtFullDes" name="Description"></textarea>
                     <button type="submit" class="btn btn-primary mt-10">Thêm mô tả</button>
                     </form>
@@ -383,7 +383,7 @@
     <section class="sach_list best_seller padding_bottom">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-sm-12">
+                <div class="col-12">
                     <div class="section_tittle text-center">
                         <h2>Sản phẩm tương tự</h2>
                     </div>

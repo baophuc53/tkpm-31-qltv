@@ -1,4 +1,4 @@
-const sachModel = require('../models/sach.model');
+const sachModel = require('../models/book.model');
 const config = require('../config/default.json');
 module.exports = {
     showSachByCat: async(req, res) => {

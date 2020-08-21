@@ -1,5 +1,5 @@
 var express = require('express');
-const sachModel = require('../models/sach.model');
+const sachModel = require('../models/book.model');
 const theloaiModel = require('../models/theloai.model');
 const controller = require('../controller/postSach.controller')
 const multer = require('multer');

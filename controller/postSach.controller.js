@@ -1,4 +1,4 @@
-const sachModel = require('../models/sach.model');
+const sachModel = require('../models/book.model');
 const theloaiModel = require('../models/theloai.model');
 
 Date.prototype.addDays = function (days) {
