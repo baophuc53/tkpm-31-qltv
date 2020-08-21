@@ -13,6 +13,7 @@
     </div>
 </section>
 <section class="checkout_area mt-5 ">
+<<<<<<< HEAD
     <div class="container  d-flex justify-content-center">
             
         <form action="/book" method="POST" enctype="multipart/form-data">
@@ -49,6 +50,47 @@
                     </div>
                     <div class="col-12 mb-2 mt-2 d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">Thêm sách</button>
+=======
+    <div class="container">
+        <div class="billing_details">
+            <div class=" ">
+                <h4>Nhập sách mới</h4>
+            </div>
+            <form action="/book" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="container ">
+                        <div class="col-6  ">
+                            <label class="col-12 col-form-label">Tên Sách </label>
+                            <input type="text" class="form-control" name="name" required />
+                        </div>
+                        <div class="col-6 ">
+                            <label class="col-12 col-form-label">Tác giả</label>
+                            <input type="text" class="form-control" name="author" required />
+                        </div>
+                        <div class="col-6 ">
+                            <label class="col-12 col-form-label">Năm xuất bản</label>
+                            <input type="number" class="form-control Price" min="1900" value="1900" name="publish_at" />
+                        </div>
+                        <div class="col-6">
+                            <label class="col-12 col-form-label">Nhà xuất bản</label>
+                            <input type="text" class="form-control" name="publisher" />
+                        </div>
+                        <div class="col-6 form-group ">
+                            <label class="col-12 col-form-label">Thể loại</label>
+                            <select class="form-control" name="category" value="choose" required>
+                                {{#each this.category}}
+                                <option value="{{id}}">{{name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="col-12 col-form-label">Hình ảnh minh họa</label>
+                            <input type="file" name="img" />
+                        </div>
+                        <div class="col-6 d-flex justify-content-end mb-2">
+                            <button type="submit" class="btn btn-primary">Thêm sách</button>
+                        </div>
+>>>>>>> 46b3eb9c4cbe338923ec8a6094f5870c5378518f
                     </div>
                 </div>
             </div>
