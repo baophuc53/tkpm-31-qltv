@@ -1,0 +1,50 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="../../stylesheets/admin.css">
+{{/section}}
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    {{>sidebar}}
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Trang Quản lý</h1>
+
+                </div>
+
+            </nav>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="txtCatName">Tên sản phẩm</label>
+                        <input type="text" class="form-control" id="txtCatName" placeholder="Tên danh muc"
+                            name="CatName" autofocus>
+                    </div>
+                    <a class="btn btn-outline-primary" href="/admin/danhmuc">
+                        <i class="fa fa-backward" aria-hidden="true"></i>
+                        List
+                    </a>
+                    <button type="submit" class="btn btn-outline-primary btn-outline-success"
+                        formaction="/admin/danhmuc/them">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Save
+                    </button>
+                </form>
+            </div>
+
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+        {{>footeradmin}}
+
+    </div>
+</div>

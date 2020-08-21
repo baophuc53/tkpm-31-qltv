@@ -1,0 +1,102 @@
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Giỏ hàng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+<!--================Cart Area =================-->
+<section class="cart_area section_padding">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+
+                <table id="cart" class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="width:40%">Sach</th>
+                            <th style="width:10%">Price</th>
+                            <th style="width:15%" class="text-center">Seller</th>
+                            <th style="width:10%">Score</th>
+                            <th style="width:20%">Shipping</th>
+                            <th style="width:5%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each wonlist}}
+                        <tr>
+                            <form class="payment" action="/wonlist/{{SachID}}/?Action=payment" method="GET">
+                                <td data-th="Sach"><a href="/detail/{{SachID}}">
+                                        <div class="row">
+                                            <div class="col-sm-2 hidden-xs"><img
+                                                    src="/images/sach/{{SachID}}/main.jpg"
+                                                    class="img-responsive" />
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <h4 class="nomargin">{{Name}}</h4>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td data-th="Price">{{Numberformat Price}}VND</td>
+
+                                <td data-th="Seller" class="text-center">{{Seller}}</td>
+                                <td data-th="Score" class="text-center">{{Score}}</td>
+
+                                <td>
+                                    <div class="shipping_box">
+                                        <input type="radio" name="shipmode" value="40000" checked> Bưu điện: 40.000
+                                        VND<br>
+                                        <input type="radio" name="shipmode" value="35000"> Chuyển phát nhanh: 35.000
+                                        VND<br>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-danger deletecart"
+                                        href="/wonlist/{{SachID}}/?Action=delete">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                    <button form="payment" type="submit" class="btn btn-outline-success mt-10">
+                                        <i class="ti ti-credit-card" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </form>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</section>
+
+{{>footer}}
+
+{{#section 'js'}}
+<script>
+    $('a.deletecart').each(function () {
+        $(this).on('click', function () {
+            $.get($(this).prop('href'), (data, status) => {
+                alert(data);
+                window.location.reload();
+            });
+            return false;
+        })
+    })
+    $('form.payment').each(function () {
+        $(this).on('submit', function () {
+            $.get($(this).prop('action'), (data, status) => {alert(data);
+                window.location.reload();
+             });
+            return false;
+        })
+    })
+</script>
+{{/section}}

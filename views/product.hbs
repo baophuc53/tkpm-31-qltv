@@ -1,0 +1,85 @@
+{{#section 'js'}}
+<script>
+    if ($('title').text().indexOf('Result ') != -1) {
+        searchKey = $('title').text().substr(7);
+        $('a.page-link').each(function(){($(this).prop('href', $(this).prop('href') + "&searchKey=" + searchKey))});
+    }
+</script>
+{{>subJs}}
+{{/section}}
+{{>header}}
+
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p><a href="/">Trang chủ </a>/
+                            <a href="/Theloai/{{catName}}/sachs">{{catName}}</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+<!--================Theloai Sach Area =================-->
+<section class="cat_sach_area section_padding border_top">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left_sidebar_area">
+                    <aside class="left_widgets p_filter_widgets sidebar_box_shadow">
+                        <div class="l_w_title">
+                            <h3>Danh mục</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                {{#each theloai}}
+                                <li>
+                                    <a href="/Theloai/{{CatName}}/sachs">{{CatName}}</a>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <div class="row">
+                    {{#each sachs}}
+                    {{>sachCard}}
+                    {{/each}}
+                </div>
+
+                <nav aria-label="Page navigation" class="mt-10">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{prev_value}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        {{#each page_numbers}}
+                        {{#if isCurrentPage}}
+                        <li class="page-item active"><a class="page-link" href="#">{{value}}</a></li>
+                        {{else}}
+                        <li class="page-item"><a class="page-link" href="?page={{value}}">{{value}}</a></li>
+                        {{/if}}
+                        {{/each}}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{next_value}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+</section>
+{{>footer}}

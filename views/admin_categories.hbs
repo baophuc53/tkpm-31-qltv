@@ -1,0 +1,67 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="../../stylesheets/admin.css">
+{{/section}}
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+   {{>sidebar}}
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Trang Quản lý Danh mục</h1>
+
+                </div>
+
+            </nav>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Danh sách Danh mục</h6>
+                    <a class="btn btn-primary float-right" href="/admin/danhmuc/them"> <i class="fas fa-fw fa-plus"></i> Thêm danh mục</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tên danh mục</th>
+                                        <th class="text-center">Sửa</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {{#each this.theloai}}
+                                    <tr>
+                                        <td>{{CatId}}</td>
+                                        <td>{{CatName}}</td>
+                                        <td class="text-center"> <a href="/admin/danhmuc/edit/{{CatId}}"><i class="fas fa-fw fa-pen"></i></a></td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+                {{>footeradmin}}
+
+    </div>
+</div>

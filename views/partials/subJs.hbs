@@ -1,0 +1,21 @@
+<script>
+    $('a.favoriteBtn').each(function () {
+        {{#if isAuthenticated}}
+        $(this).on('click', () => {
+            $.get($(this).prop('href'), (data, status) => {
+                if (data == 'liked')
+                    $(this).html('<i class="fa fa-heart" style="color: red;"></i><span class="text-danger"> Yêu thích</span>');
+                else
+                    if (data == 'unliked')
+                        $(this).html('<i class="far fa-heart" style="color: red;"></i><span class="text-danger"> Yêu thích</span>');
+                    else {
+                        window.location.replace('/login?retUrl='+window.location.pathname);
+                    }
+            }) 
+            return false;
+        })
+        {{else}}
+            $(this).prop('href','/login?retUrl='+window.location.pathname);
+            {{/if}}
+    })
+</script>

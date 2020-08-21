@@ -1,0 +1,79 @@
+{{#section 'js'}}
+<script>
+    $('a.decline').each(function(){
+        $(this).on('click',function(){
+            $.get($(this).prop('href'),function(data,status){
+                alert(data);
+                location.reload();
+            })
+            return false;
+        })
+    })
+</script>
+{{/section}}
+{{>header}}
+
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/Đấu giá của tôi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="cart_area section_padding">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+
+                <table id="cart" class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="width:40%">Sản phẩm</th>
+                            <th style="width:10%">Giá hiện tại</th>
+                            <th style="width:30%" class="text-center">Thời gian còn lại</th>
+                            <th style="width:10%">Trạng thái</th>
+                            <th style="width=10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each sachs}}
+                        <tr>
+                            <td data-th="Sach"><a href="/detail/{{SachID}}">
+                                    <div class="row">
+                                        <div class="col-sm-2 hidden-xs"><img
+                                                src="/images/sach/{{SachID}}/main.jpg" class="img-responsive" />
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <h4 class="nomargin">{{Name}}</h4>
+                                        </div>
+                                    </div>
+                                </a>
+                            </td>
+                            <td data-th="Price">{{Numberformat Price}}VND</td>
+
+                            <td data-th="Seller" class="text-center">{{EndTimeFormat EndTime}}</td>
+                            <td data-th="Score" class="text-center">{{State}}</td>
+                            <td>
+                                {{#if Like}}
+                                <a class="btn btn-primary decline" href="/mybid/{{SachID}}?Action=like">
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                </a>
+                                <a class="btn btn-success decline" href="/mybid/{{SachID}}?Action=dislike">
+                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                </a>
+                                {{/if}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</section>
+{{>footer}}

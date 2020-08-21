@@ -1,0 +1,40 @@
+{{>header}}
+
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Sản phẩm yêu thích</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+<!--================Cart Area =================-->
+<section class="cart_area mt-5">
+    <div class="container">
+        <div class="col-sm-12">
+                        <div class="row">
+                            <div class="sach_top_bar d-flex justify-content-between align-items-center">
+                                <div class="single_sach_menu sach_bar_item">
+                                    <h2>Danh sách sản phẩm yêu thích</h2>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            {{#each sachs}}
+                            {{>sachCard}}
+                            {{/each}}
+                        </div>
+                    </div>
+        </div>
+</section>
+{{footer}}
+{{#section 'js'}}
+{{>subJs}}
+{{/section}}

@@ -1,0 +1,62 @@
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Nhận xét của tôi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+<!--================Cart Area =================-->
+<section class="cart_area mt-5">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="form-group ">
+                <h4>Nhận xét của tôi</h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:45%">Sản phẩm</th>
+                            <th scope="width:45%">Nhận xét</th>
+                            <th scope="width:10%">Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each this.comments}}
+                        <tr>
+                            <td data-th="Sach"><a href="/detail/{{Sach}}">
+                                    <div class="row">
+                                        <div class="col-sm-2 hidden-xs"><img src="/images/sach/{{Sach}}/main.jpg"
+                                                class="img-responsive" />
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <h4 class="nomargin">{{Name}}</h4>
+                                        </div>
+                                    </div>
+                                </a>
+                            </td>
+                            <td data-th="comment">{{Comment}}</td>
+                            {{#if Status}}
+                            <td data-th="Status"><span class="btn btn-outline-success">
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                </span></td>{{else}}
+                            <td data-th="Status"><span class="btn btn-outline-danger">
+                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                </span></td>
+                            {{/if}}
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</section>
+{{footer}}

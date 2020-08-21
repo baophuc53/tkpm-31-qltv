@@ -1,0 +1,128 @@
+{{#section 'js'}}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<script>
+    $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap'
+    });
+</script>
+<script>
+    $('#Dialog').on('hide.bs.modal', () => location.reload())
+    $('#upgrade').on('click', function () {
+        console.log($(this).prop('href'));
+        $.get($(this).prop('href'), (data, status) => {
+            if (data == 'Success') {
+                alert('Success')
+                window.location.reload();
+            } else {
+                alert('Có lỗi xảy ra')
+                window.localStorage.reload();
+            }
+        })
+        return false;
+    })
+</script>
+{{/section}}
+
+{{#section 'css'}}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+{{/section}}
+
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Trang cá nhân</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area mt-5">
+    <div class="container">
+        <div class="billing_details">
+            <div class="form-group ">
+                <h4>Thông tin tài khoản</h4>
+            </div>
+            {{#if err_message}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+                {{user.err_message}}
+            </div>
+            {{/if}}
+            <form class="row contact_form" action="#" method="Post" novalidate="novalidate">
+                <div class="col-md-12 form-group ">
+                    <label class="col-sm-2 col-form-label" for="fullname">Họ tên </label>
+                    <input type="text" class="form-control" id="name" value="{{user.Name}}" name="Name" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="col-sm-2 col-form-label" for="phone_number">Số điện thoại</label>
+                    <input type="text" class="form-control" id="Phone" name="Phone" value="{{user.Phone}}" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="col-sm-2 col-form-label" for="email">Email</label>
+                    <input type="text" class="form-control" id="Email" name="Email" value="{{user.Email}}" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="col-sm-2 col-form-label" for="Address">Địa chỉ</label>
+                    <input type="text" class="form-control" id="Address" name="Address" value="{{user.Address}}" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="col-sm-2 col-form-label" for="date">Ngày sinh</label>
+                    <input id="datepicker" name="Date" width="270" value="{{date}}" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <input type="password" class="form-control" id="OldPassword" name="OldPassword"
+                        placeholder="Old Password" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <input type="password" class="form-control" id="NewPassword" name="NewPassword"
+                        placeholder="New Password" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword"
+                        placeholder="Confirm Password" />
+                </div>
+                <div class="col-md-12 form-group">
+                    <button type="submit" value="submit" class="btn  btn-danger">
+                        Cập nhật
+                    </button>
+                    {{#if isSeller}}
+                    <a class="btn btn-primary" href="/profile/upgrade" id="upgrade">
+                        Đăng ký làm người bán
+                    </a>
+                    {{/if}}
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="Dialog" tabindex="-1" role="dialog" aria-labelledby="BorrowDialogLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="BorrowDialogLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" id="message">
+                <i class="fa fa-check" aria-hidden="true"></i><span>Đấu giá thành công!!!</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
