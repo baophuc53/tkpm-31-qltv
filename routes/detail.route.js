@@ -1,6 +1,6 @@
 var express = require('express');
-const theloaiModel = require('../models/theloai.model');
-const sachModel = require('../models/book.model');
+const categoryModel = require('../models/category.model');
+const bookModel = require('../models/book.model');
 const userModel = require('../models/nguoidung.model');
 const moment=require('moment')
 
@@ -11,15 +11,15 @@ var router = express.Router();
 
 router.get('/:id', async(req, res) => {
     const ID = req.params.id;
-    const [sach] = await Promise.all(
-        [sachModel.single(ID)
+    const [book] = await Promise.all(
+        [bookModel.single(ID)
         ]);
-    if (!sach)
+    if (!book)
         return res.redirect('/err');
         
-    const [catName, alikeSach] = await Promise.all(
-        [theloaiModel.single(sach.Theloai),
-            sachModel.popularByCat(sach.Theloai)
+    const [name, alikebook] = await Promise.all(
+        [categoryModel.single(book.category),
+            bookModel.popularByCat(book.category)
         ]);
     bidScore = 0;
     if (auction.length != 0)
@@ -35,40 +35,40 @@ router.get('/:id', async(req, res) => {
         element.Name = "****" + element.Name.Name.substr(element.Name.Name.length - 4);
     });
     if (req.session.isAuthenticated)
-        alikeSach.forEach(j => {
+        alikebook.forEach(j => {
             favoriteList.forEach(k => {
                // console.log(k)
-                if (k.User == req.session.authUser.Username && k.Sach == j.SachID)
+                if (k.User == req.session.authUser.Username && k.book == j.id)
                     j.isFavorite = true;
             });
         });
  //   console.log(favoriteList);
     subIMG = [];
-    for (i = 1; i <= sach.ImageCount; i++) {
+    for (i = 1; i <= book.ImageCount; i++) {
         subIMG.push({
-            SachID: sach.SachID,
+            id: book.id,
             id: i
         })
     };
     isBan = []
     if (req.session.authUser)
         isBan = await bannedModel.isBan(req.session.authUser.Username, ID);
-    isSelling = (sach.EndTime >= new Date()) && (sach.Status == 0) && isBan.length == 0;
-    isMySach = false;
+    isSelling = (book.EndTime >= new Date()) && (book.Status == 0) && isBan.length == 0;
+    isMybook = false;
     if (req.session.authUser)
-        isMySach = (sach.Seller == req.session.authUser.Username);
+        isMybook = (book.Seller == req.session.authUser.Username);
     res.render('detail', {
         ID,
-        title: sach.Name,
-        sach,
+        title: book.Name,
+        book,
         auction,
         subIMG,
         properties,
-        catName,
+        name,
         bidScore,
         sellScore,
-        alikeSach,
-        isMySach,
+        alikebook,
+        isMybook,
         Borrow: req.query.Borrow || false,
         isSelling
     });
@@ -76,54 +76,54 @@ router.get('/:id', async(req, res) => {
 
 router.post('/:id/Borrow', auth, async(req, res) => {
     const list = userModel.all();
-    [sach, score] = await Promise.all(
+    [book, score] = await Promise.all(
         [
-            sachModel.single(req.params.id),
+            bookModel.single(req.params.id),
             userModel.getScore(req.session.authUser.Username)
         ]);
     res.type('html');
     res.charset = 'utf-8';
 
-    if (sach.Seller == req.session.authUser.Username)
-        return res.send('Your sach')
-    if (sach.Public == 1 && score < 0.8)
+    if (book.Seller == req.session.authUser.Username)
+        return res.send('Your book')
+    if (book.Public == 1 && score < 0.8)
         return res.send('Low Score');
-    if (+req.body.Price < +sach.Price + (+sach.StepPrice))
+    if (+req.body.Price < +book.Price + (+book.StepPrice))
         return res.send("Low Price");
-    if (sach.EndTime < new Date())
+    if (book.EndTime < new Date())
         return res.send("Time Up");
-    if (sach.Status == 1)
+    if (book.Status == 1)
         return res.send("Sold Out")
-    if (sach.InstancePrice != null)
-        if (+req.body.Price >= sach.InstancePrice)
+    if (book.InstancePrice != null)
+        if (+req.body.Price >= book.InstancePrice)
             return res.send("Buy");
-    sach.BorrowTime = +sach.BorrowTime + 1;
+    book.BorrowTime = +book.BorrowTime + 1;
     if (entity)
         if (+req.body.Price > +entity.Price) {
            // console.log(+req.body.Price, +entity.Price)
-            sach.Price = +entity.Price + (+req.body.StepPrice);
-            sach.PriceHolder = req.session.authUser.Username;
+            book.Price = +entity.Price + (+req.body.StepPrice);
+            book.PriceHolder = req.session.authUser.Username;
             await Promise.all(
                 [
                     auctionModel.patchHighestPrice({
-                        Sach: req.params.id,
+                        book: req.params.id,
                         User: req.session.authUser.Username,
                         Price: +req.body.Price
                     }),
                     auctionModel.add({
-                        Sach: req.params.id,
+                        book: req.params.id,
                         Bidder: req.session.authUser.Username,
-                        Price: sach.Price,
+                        Price: book.Price,
                         Time: new Date()
                     }),
-                    sachModel.patch(sach)
+                    bookModel.patch(book)
                 ]);
         } else {
-            if (req.session.authUser.Username == sach.PriceHolder)
+            if (req.session.authUser.Username == book.PriceHolder)
                 return res.send("Price Holder")
-            sach.Price = +req.body.Price + (+sach.StepPrice);
+            book.Price = +req.body.Price + (+book.StepPrice);
             await auctionModel.add({
-                Sach: req.params.id,
+                book: req.params.id,
                 Bidder: req.session.authUser.Username,
                 Price: +req.body.Price,
                 Time: new Date()
@@ -132,31 +132,31 @@ router.post('/:id/Borrow', auth, async(req, res) => {
             await Promise.all(
                 [
                     auctionModel.add({
-                        Sach: req.params.id,
+                        book: req.params.id,
                         Bidder: entity.User,
-                        Price: sach.Price,
+                        Price: book.Price,
                         Time: new Date()
                     }),
-                    sachModel.patch(sach),
+                    bookModel.patch(book),
                 ]);
         }
     else {
-        sach.Price = +sach.Price + (+sach.StepPrice);
-        sach.PriceHolder = req.session.authUser.Username;
+        book.Price = +book.Price + (+book.StepPrice);
+        book.PriceHolder = req.session.authUser.Username;
         await Promise.all(
             [
                 auctionModel.addHighestPrice({
-                    Sach: req.params.id,
+                    book: req.params.id,
                     User: req.session.authUser.Username,
                     Price: +req.body.Price
                 }),
                 auctionModel.add({
-                    Sach: req.params.id,
+                    book: req.params.id,
                     Bidder: req.session.authUser.Username,
-                    Price: sach.Price,
+                    Price: book.Price,
                     Time: new Date()
                 }),
-                sachModel.patch(sach),
+                bookModel.patch(book),
             ])
     }
     res.status(200);
@@ -165,25 +165,25 @@ router.post('/:id/Borrow', auth, async(req, res) => {
 });
 
 router.get('/:id/Buy', auth, async(req, res) => {
-    sach = await sachModel.single(req.params.id);
+    book = await bookModel.single(req.params.id);
     score = await userModel.getScore(req.session.authUser.Username);
 
-    if (sach.Seller == req.session.authUser.Username)
-        return res.send('Your sach')
-    if (!sach.InstancePrice)
+    if (book.Seller == req.session.authUser.Username)
+        return res.send('Your book')
+    if (!book.InstancePrice)
         return res.send('No Instance Price')
-    if (sach.Public == 0 && score < 0.8)
+    if (book.Public == 0 && score < 0.8)
         return res.send('Low Score');
-    if (sach.EndTime < new Date())
+    if (book.EndTime < new Date())
         return res.send("Time Up");
-    if (sach.Status == 1)
+    if (book.Status == 1)
         return res.send("Sold Out")
-    sach.Status = 1;
+    book.Status = 1;
     await Promise.all(
-        [sachModel.patch(sach),
+        [bookModel.patch(book),
             cartModel.add({
                 User: req.session.authUser.Username,
-                Sach: req.params.id
+                book: req.params.id
             })
         ]);
     res.send("Success");
@@ -192,26 +192,26 @@ router.get('/:id/Buy', auth, async(req, res) => {
 router.get('/:id/ban', async(req, res) => {
     await bannedModel.add({
         Username: req.query.Username,
-        Sach: req.params.id
+        book: req.params.id
     })
-    sach = await sachModel.single(req.params.id);
-    if (sach.PriceHolder == req.session.authUser.Username) {
-        auction = await auctionModel.getBorrowBySachId(req.params.id);
+    book = await bookModel.single(req.params.id);
+    if (book.PriceHolder == req.session.authUser.Username) {
+        auction = await auctionModel.getBorrowByid(req.params.id);
         console.log(auction[0])
         kt = false;
         for (i = 0; i < auction.length; i++) {
             check = await bannedModel.isBan(auction[i].Bidder, req.params.id);
             if (check.length == 0) {
-                sach.PriceHolder = auction[i].Bidder;
-                sach.Price = auction[i].Price;
+                book.PriceHolder = auction[i].Bidder;
+                book.Price = auction[i].Price;
                 kt = true
             }
         }
         if (!kt) {
-            sach.Price = sach.StartPrice;
-            sach.PriceHolder = null;
+            book.Price = book.StartPrice;
+            book.PriceHolder = null;
         }
-        await sachModel.patch(sach);
+        await bookModel.patch(book);
     }
     user=await userModel.singleByUserName(req.query.Username);
     mailerModel.sendEmail(req, res, user.Email, "Đấu giá thành công!", "Chúc mừng bạn đấu giá thành công!");
@@ -219,9 +219,9 @@ router.get('/:id/ban', async(req, res) => {
 })
 
 router.post('/:id/addDescription',async (req,res)=>{
-    sach=await sachModel.single(req.params.id);
-    sach.Description=sach.Description+'\n'+moment().format('DD/MM/YYYY hh:mm')+'\n'+req.body.Description;
-    await sachModel.patch(sach);
+    book=await bookModel.single(req.params.id);
+    book.Description=book.Description+'\n'+moment().format('DD/MM/YYYY hh:mm')+'\n'+req.body.Description;
+    await bookModel.patch(book);
     res.send('success')
 })
 module.exports = router;

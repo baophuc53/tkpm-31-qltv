@@ -35,9 +35,9 @@
             }
         });
     }
-    var best_sach_slider = $('.best_sach_slider');
-    if (best_sach_slider.length) {
-        best_sach_slider.owlCarousel({
+    var best_book_slider = $('.best_book_slider');
+    if (best_book_slider.length) {
+        best_book_slider.owlCarousel({
             items: 4,
             loop: true,
             dots: false,
@@ -71,10 +71,10 @@
         });
     }
 
-    //sach list slider
-    var sach_list_slider = $('.sach_list_slider');
-    if (sach_list_slider.length) {
-        sach_list_slider.owlCarousel({
+    //book list slider
+    var book_list_slider = $('.book_list_slider');
+    if (book_list_slider.length) {
+        book_list_slider.owlCarousel({
             items: 1,
             loop: true,
             dots: false,
@@ -263,12 +263,12 @@
 
 
 
-    //   console.log(  $(this).innerHTML='Sach Count: '+ a++ );
+    //   console.log(  $(this).innerHTML='book Count: '+ a++ );
     // });
 
-    var sach_overview = $('#vertical');
-    if (sach_overview.length) {
-        sach_overview.lightSlider({
+    var book_overview = $('#vertical');
+    if (book_overview.length) {
+        book_overview.lightSlider({
             gallery: true,
             item: 1,
             verticalHeight: 450,

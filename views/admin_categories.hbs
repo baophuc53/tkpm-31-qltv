@@ -42,11 +42,11 @@
                                 </thead>
 
                                 <tbody>
-                                    {{#each this.theloai}}
+                                    {{#each this.category}}
                                     <tr>
-                                        <td>{{CatId}}</td>
-                                        <td>{{CatName}}</td>
-                                        <td class="text-center"> <a href="/admin/danhmuc/edit/{{CatId}}"><i class="fas fa-fw fa-pen"></i></a></td>
+                                        <td>{{id}}</td>
+                                        <td>{{name}}</td>
+                                        <td class="text-center"> <a href="/admin/danhmuc/edit/{{id}}"><i class="fas fa-fw fa-pen"></i></a></td>
                                     </tr>
                                     {{/each}}
                                 </tbody>

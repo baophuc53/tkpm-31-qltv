@@ -8,7 +8,7 @@ const logger = require('morgan');
 const exphbs = require('express-handlebars');
 
 
-const theloaiModel = require('./models/theloai.model')
+const categoryModel = require('./models/category.model')
 const middleware = require('./middlewares/router.mdw');
 
 const app = express();
@@ -46,16 +46,16 @@ middleware(app);
 
 // // error handler
 // app.use(async(err, req, res, next) => {
-//     if (!res.locals.lstheloai)
-//         res.locals.lstheloai = await theloaiModel.all();
-//     theloai = res.locals.lstheloai;
+//     if (!res.locals.lscategory)
+//         res.locals.lscategory = await categoryModel.all();
+//     category = res.locals.lscategory;
 //     // set locals, only providing error in development
 //     res.locals.message = err.message;
 //     res.locals.error = req.app.get('env') === 'development' ? err : {};
 //     // render the error page
 //     errstatus = err.status || 500;
 //     res.status(errstatus);
-//     res.render('error', { theloai, errstatus });
+//     res.render('error', { category, errstatus });
 // });
 
 

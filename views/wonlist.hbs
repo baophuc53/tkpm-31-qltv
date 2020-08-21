@@ -22,7 +22,7 @@
                 <table id="cart" class="table table-hover table-condensed">
                     <thead>
                         <tr>
-                            <th style="width:40%">Sach</th>
+                            <th style="width:40%">book</th>
                             <th style="width:10%">Price</th>
                             <th style="width:15%" class="text-center">Seller</th>
                             <th style="width:10%">Score</th>
@@ -33,11 +33,11 @@
                     <tbody>
                         {{#each wonlist}}
                         <tr>
-                            <form class="payment" action="/wonlist/{{SachID}}/?Action=payment" method="GET">
-                                <td data-th="Sach"><a href="/detail/{{SachID}}">
+                            <form class="payment" action="/wonlist/{{id}}/?Action=payment" method="GET">
+                                <td data-th="book"><a href="/detail/{{id}}">
                                         <div class="row">
                                             <div class="col-2 hidden-xs"><img
-                                                    src="/images/sach/{{SachID}}/main.jpg"
+                                                    src="/images/book/{{id}}/main.jpg"
                                                     class="img-responsive" />
                                             </div>
                                             <div class="col-10">
@@ -61,7 +61,7 @@
                                 </td>
                                 <td>
                                     <a class="btn btn-outline-danger deletecart"
-                                        href="/wonlist/{{SachID}}/?Action=delete">
+                                        href="/wonlist/{{id}}/?Action=delete">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </a>
                                     <button form="payment" type="submit" class="btn btn-outline-success mt-10">

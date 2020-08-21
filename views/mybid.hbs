@@ -42,12 +42,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each sachs}}
+                        {{#each book}}
                         <tr>
-                            <td data-th="Sach"><a href="/detail/{{SachID}}">
+                            <td data-th="book"><a href="/detail/{{id}}">
                                     <div class="row">
                                         <div class="col-2 hidden-xs"><img
-                                                src="/images/sach/{{SachID}}/main.jpg" class="img-responsive" />
+                                                src="/images/book/{{id}}/main.jpg" class="img-responsive" />
                                         </div>
                                         <div class="col-10">
                                             <h4 class="nomargin">{{Name}}</h4>
@@ -61,10 +61,10 @@
                             <td data-th="Score" class="text-center">{{State}}</td>
                             <td>
                                 {{#if Like}}
-                                <a class="btn btn-primary decline" href="/mybid/{{SachID}}?Action=like">
+                                <a class="btn btn-primary decline" href="/mybid/{{id}}?Action=like">
                                     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                                 </a>
-                                <a class="btn btn-success decline" href="/mybid/{{SachID}}?Action=dislike">
+                                <a class="btn btn-success decline" href="/mybid/{{id}}?Action=dislike">
                                     <i class="fa fa-thumbs-down" aria-hidden="true"></i>
                                 </a>
                                 {{/if}}

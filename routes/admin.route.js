@@ -1,7 +1,7 @@
 var express = require('express');
 var nodemailer = require('nodemailer');
 const userModel = require('../models/nguoidung.model');
-const theloaiModel = require('../models/theloai.model');
+const categoryModel = require('../models/category.model');
 var router = express.Router();
 
 router.get('/nguoidung', async(req, res) => {
@@ -33,44 +33,44 @@ router.get('/nguoidung', async(req, res) => {
 
 router.get('/danhmuc', async(req, res) => {
     const list = await userModel.all();
-    res.render('admin_theloai', {
+    res.render('admin_category', {
         title: 'Admin',
         users: list
     });
 });
 
 router.get('/danhmuc/them', (req, res) => {
-    res.render('add_theloai', {
+    res.render('add_category', {
         title: 'Thêm danh mục'
     });
 });
 
 router.post('/danhmuc/them', async(req, res) => {
     const entity = {
-        CatName: req.body.CatName,
+        name: req.body.name,
     }
-    const result = await theloaiModel.add(entity);
+    const result = await categoryModel.add(entity);
     console.log(result);
-    res.render('add_theloai', {
+    res.render('add_category', {
         title: 'Thêm danh mục'
     });
 });
 
 router.get('/danhmuc/edit/:id', async(req, res) => {
-    const rows = await theloaiModel.single(req.params.id);
-    res.render('edit_theloai', {
+    const rows = await categoryModel.single(req.params.id);
+    res.render('edit_category', {
         title: 'Sửa danh mục',
-        theloai: rows
+        category: rows
     });
 });
 
 router.post('/danhmuc/patch', async(req, res) => {
-    const result = await theloaiModel.patch(req.body);
+    const result = await categoryModel.patch(req.body);
     res.redirect('/admin/danhmuc');
 });
 
 router.post('/danhmuc/del', async(req, res) => {
-    const result = await theloaiModel.del(req.body.CatId);
+    const result = await categoryModel.del(req.body.id);
     res.redirect('/admin/danhmuc');
 });
 

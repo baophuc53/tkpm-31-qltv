@@ -1,8 +1,8 @@
-const sachModel = require('../models/book.model');
+const bookModel = require('../models/book.model');
 const config = require('../config/default.json');
 module.exports = {
-    showSachByCat: async(req, res) => {
-        const catName = req.params.name;
+    showbookByCat: async(req, res) => {
+        const name = req.params.name;
         const limit = config.paginate.limit;
 
         const page = req.query.page || 1;
@@ -10,15 +10,15 @@ module.exports = {
         const offset = (page - 1) * config.paginate.limit;
 
         const [total, rows] = await Promise.all([
-            sachModel.countByCat(catName),
-            sachModel.pageByCat(catName, offset)
+            bookModel.countByCat(name),
+            bookModel.pageByCat(name, offset)
         ]);
 
         rows.forEach(j => {
             
         });
 
-        // const total = await sachModel.countByCat(catId);
+        // const total = await bookModel.countByCat(id);
         let nPages = Math.floor(total / limit);
         if (total % limit > 0) nPages++;
         const page_numbers = [];
@@ -29,11 +29,11 @@ module.exports = {
             })
         }
 
-        // const rows = await sachModel.pageByCat(catId, offset);
-        res.render('sach', {
-            title: catName,
-            catName,
-            sachs: rows,
+        // const rows = await bookModel.pageByCat(id, offset);
+        res.render('book', {
+            title: name,
+            name,
+            book: rows,
             empty: rows.length === 0,
             page_numbers,
             prev_value: +page - 1,

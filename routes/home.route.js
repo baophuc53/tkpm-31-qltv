@@ -1,5 +1,5 @@
 var express = require('express');
-const sachModel = require('../models/book.model');
+const bookModel = require('../models/book.model');
 const config = require('../config/default.json');
 var router = express.Router();
 
@@ -9,8 +9,8 @@ router.get('/', async(req, res) => {
     res.render('home', {
         title: 'Sàn đấu giá',
         nearFinish:[{
-           Tensach: "aaaa",
-           Tacgia: "sàdf",
+           name: "aaaa",
+           author: "sàdf",
            Namxuatban: "ádfd",
            Nhaxuatban: "ádfsadfa",
         }],
@@ -30,15 +30,15 @@ router.get('/search', async(req, res) => {
     const page = req.query.page || 1;
     if (page < 1) page = 1;
     const offset = (page - 1) * limit;
-    [sachs, total] = await Promise.all(
+    [book, total] = await Promise.all(
         [
-            sachModel.search(req.query.searchKey, offset),
-            sachModel.countBySearch(req.query.searchKey)
+            bookModel.search(req.query.searchKey, offset),
+            bookModel.countBySearch(req.query.searchKey)
         ]
     )
 
     if (req.session.isAuthenticated)
-        sachs.forEach(j => {
+        book.forEach(j => {
            
         });
     nPages = Math.floor(total / limit);
@@ -50,10 +50,10 @@ router.get('/search', async(req, res) => {
             isCurrentPage: i === +page
         })
     }
-    res.render('sach', {
+    res.render('book', {
         title: 'Result ' + req.query.searchKey,
-        sachs,
-        empty: sachs.length === 0,
+        book,
+        empty: book.length === 0,
         page_numbers,
         prev_value: +page - 1,
         next_value: +page + 1,

@@ -23,11 +23,11 @@
                     <div class="container ">
                         <div class="col-6  ">
                             <label class="col-12 col-form-label">Tên Sách </label>
-                            <input type="text" class="form-control" name="Tensach" required />
+                            <input type="text" class="form-control" name="name" required />
                         </div>
                         <div class="col-6 ">
                             <label class="col-12 col-form-label">Tác giả</label>
-                            <input type="text" class="form-control" name="Tentacgia" required />
+                            <input type="text" class="form-control" name="Tenauthor" required />
                         </div>
                         <div class="col-6 ">
                             <label class="col-12 col-form-label">Năm xuất bản</label>
@@ -39,9 +39,9 @@
                         </div>
                         <div class="col-6 form-group ">
                             <label class="col-12 col-form-label">Thể loại</label>
-                            <select class="form-control" name="Matheloai" value="choose" required>
-                                {{#each this.theloai}}
-                                <option value="{{Matheloai}}">{{Tentheloai}}</option>
+                            <select class="form-control" name="id" value="choose" required>
+                                {{#each this.category}}
+                                <option value="{{id}}">{{category.name}}</option>
                                 {{/each}}
                             </select>
                         </div>

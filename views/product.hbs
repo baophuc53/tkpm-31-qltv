@@ -17,7 +17,7 @@
                 <div class="breadcrumb_iner">
                     <div class="breadcrumb_iner_item">
                         <p><a href="/">Trang chủ </a>/
-                            <a href="/Theloai/{{catName}}/sachs">{{catName}}</a></p>
+                            <a href="/category/{{name}}/book">{{name}}</a></p>
                     </div>
                 </div>
             </div>
@@ -25,8 +25,8 @@
     </div>
 </section>
 <!-- breadcrumb start-->
-<!--================Theloai Sach Area =================-->
-<section class="cat_sach_area section_padding border_top">
+<!--================category book Area =================-->
+<section class="cat_book_area section_padding border_top">
     <div class="container">
         <div class="row">
             <div class="col-3">
@@ -37,9 +37,9 @@
                         </div>
                         <div class="widgets_inner">
                             <ul class="list">
-                                {{#each theloai}}
+                                {{#each category}}
                                 <li>
-                                    <a href="/Theloai/{{CatName}}/sachs">{{CatName}}</a>
+                                    <a href="/category/{{name}}/book">{{name}}</a>
                                 </li>
                                 {{/each}}
                             </ul>
@@ -49,8 +49,8 @@
             </div>
             <div class="col-9">
                 <div class="row">
-                    {{#each sachs}}
-                    {{>sachCard}}
+                    {{#each book}}
+                    {{>bookCard}}
                     {{/each}}
                 </div>
 

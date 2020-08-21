@@ -1,5 +1,5 @@
-const sachModel = require('../models/book.model');
-const theloaiModel = require('../models/theloai.model');
+const bookModel = require('../models/book.model');
+const categoryModel = require('../models/category.model');
 
 Date.prototype.addDays = function (days) {
     var date = new Date(this.valueOf());
@@ -8,17 +8,17 @@ Date.prototype.addDays = function (days) {
 }
 
 module.exports = {
-    postSach: async (req, res) => {
+    postbook: async (req, res) => {
         const entity = req.body;
         entity.Seller = req.session.authUser;
         var now = new Date();
         entity.StartTime = now;
         entity.EndTime = now.addDays(7);
-        const theloai = await theloaiModel.getIdByCatName(entity.CatName);
-        entity.Theloai = theloai.CatId;
-        entity.SachID = (await sachModel.getMaxId()).ID;
-        delete entity.CatName;
-        const add = sachModel.add(entity);
+        const category = await categoryModel.getIdByname(entity.name);
+        entity.category = category.id;
+        entity.id = (await bookModel.getMaxId()).ID;
+        delete entity.name;
+        const add = bookModel.add(entity);
     }
 
 }

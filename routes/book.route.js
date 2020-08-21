@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
 
     fs.writeFile(`/public/images/book/${id}`,file.img[0])
     await bookModel.patch({
-        Masach:id,
+        id:id,
         img:`/public/images/book/${id}`
     })
     res.render("message", {
