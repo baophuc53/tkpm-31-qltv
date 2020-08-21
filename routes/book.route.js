@@ -37,39 +37,16 @@ router.post("/", async (req, res) => {
           message: "Failed",
         });
         return;
-      } else {
-        await bookModel.patch({
-          id: id,
-          img: `/public/images/book/${id}.jpg`,
-        });
-        res.render("message", {
-          message: "Success",
-        });
       }
+      await bookModel.patch({
+        id: id,
+        img: `/public/images/book/${id}.jpg`,
+      });
+      res.render("message", {
+        message: "Success",
+      });
     });
-//   const form = new multiparty.Form();
-//   form.parse(req, async (err, data, file) => {
-//     if (err != null) {
-//       res.render("error");
-//       return;
-//     }
-
-//     for (const key in data) {
-//         data[key]=data[key][0]
-//     }
-
-//     const id=await bookModel.add(data);
-
-
-//     fs.writeFile(`/public/images/book/${id}`,file.img[0])
-//     await bookModel.patch({
-//         id:id,
-//         img:`/public/images/book/${id}`
-//     })
-//     res.render("message", {
-//       message: "Success",
-//     });
-//   });
+  });
 });
 
 module.exports = router;
