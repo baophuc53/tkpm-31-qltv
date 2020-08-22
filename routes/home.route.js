@@ -6,7 +6,6 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', async(req, res) => {
     const book = await bookModel.all();
-    console.log(book);
     res.render('home', {
         title: 'Thư viện online',
         book

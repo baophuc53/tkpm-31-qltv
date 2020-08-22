@@ -13,22 +13,26 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/edit/:id", async (req, res) => {
+  var fee;
   const borrow = await borrowModel.singleWithReaderName(req.params.id);
   const borrow_book = await borrowModel.borrowBooksById(req.params.id);
+
+  if (borrow.status === "Đang mượn") {
+  borrow.canReturn = true;
   const timeout = await paramsModel.loadParam("Hạn trả sách");
   const feePerDay = await paramsModel.loadParam("Tiền quá hạn");
-  const day = moment().diff(borrow.create_at,'day');
-  var fee;
-  if (day > +timeout.value)
-    fee = (day-timeout.value)*(+feePerDay.value);
+  const day = moment().diff(borrow.create_at, "day");
+
+  if (day > +timeout.value) 
+    fee = (day - timeout.value) * +feePerDay.value;
   else 
     fee = 0;
-    console.log(fee);
-  if (borrow.status === "Đang mượn") borrow.canReturn = true
+  } else
+  fee = borrow.fee;
   res.render("editBorrow", {
     borrow,
     borrow_book,
-    fee
+    fee,
   });
 });
 
@@ -48,20 +52,21 @@ router.post("/add", async (req, res) => {
   res.redirect("/reader");
 });
 
-router.post("/return/:id",  async (req, res) => {
-    console.log(req.body)
-    const borrow={};
-    borrow.id=req.params.id
-    borrow.return_at = new Date();
-    borrow.status = "Đã trả";
-    await borrowModel.patch(borrow);
-    const borrow_book = await borrowModel.borrowBooksById(req.params.id);
-    borrow_book.forEach(async e=>{
-        if(req.body[e.id.toString()])
-            await bookModel.patch({id:e.id,status:"còn"})
-        else
-            await bookModel.patch({id:e.id,status:"mất"});
-    });
-    
-})
+router.post("/return/:id", async (req, res) => {
+  const borrow = {};
+  borrow.id = req.params.id;
+  borrow.return_at = new Date();
+  borrow.status = "Đã trả";
+  borrow.fee = req.body.fee;
+  await borrowModel.patch(borrow);
+  const borrow_book = await borrowModel.borrowBooksById(req.params.id);
+  borrow_book.forEach(async (e) => {
+    if (req.body[e.id.toString()])
+      await bookModel.patch({ id: e.id, status: "mất" });
+    else await bookModel.patch({ id: e.id, status: "còn" });
+  });
+  res.render("success", {
+    retUrl: "/borrow",
+  });
+});
 module.exports = router;
