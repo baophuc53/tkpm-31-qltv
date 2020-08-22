@@ -4,5 +4,8 @@ const lscategory = require("../middlewares/locals.mdw");
 
 module.exports = (app) => {
   app.use("/", lscategory, homeRouter);
-  app.use("/book", book);
+  app.use("/book",lscategory, book);
+  app.use("/login", require("../routes/login.route"));
+  app.use("/reader", lscategory, require("../routes/reader.route"));
+  app.use("/borrow", lscategory, require("../routes/borrow.route"));
 };

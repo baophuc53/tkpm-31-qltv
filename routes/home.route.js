@@ -5,22 +5,18 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', async(req, res) => {
-
+    const book = await bookModel.all();
+    console.log(book);
     res.render('home', {
-        title: 'Sàn đấu giá',
-        nearFinish:[{
-           name: "aaaa",
-           author: "sàdf",
-           Namxuatban: "ádfd",
-           Nhaxuatban: "ádfsadfa",
-        }],
+        title: 'Thư viện online',
+        book
     });
 });
 
 router.get('/logout', (req, res) => {
     req.session.isAuthenticated = false;
-    if (req.session.authUser.Username)
-        delete req.session.authUser.Username;
+    if (req.session.role)
+        delete req.session.role;
     res.redirect('/login');
 })
 

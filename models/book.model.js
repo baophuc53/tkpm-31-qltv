@@ -10,6 +10,6 @@ module.exports = {
         return db.patch('book',entity,condition)
     },
     del:(condition)=>db.del('book',condition)
-
+    
 
 };

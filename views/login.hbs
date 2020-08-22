@@ -31,20 +31,16 @@
                             {{err_message}}
                         </div>
                         {{/if}}
-                        <form class="row contact_form" method="POST" novalidate="novalidate">
+                        <form class="row contact_form" method="POST">
                             <div class="col-12 form-group p_star">
                                 <input type="text" class="form-control" id="username" name="username" value=""
-                                    placeholder="Username">
+                                    placeholder="Username" required>
                             </div>
                             <div class="col-12 form-group p_star">
                                 <input type="password" class="form-control" id="password" name="password" value=""
-                                    placeholder="Password">
+                                    placeholder="Password" required>
                             </div>
                             <div class="col-12 form-group">
-                                <div class="creat_account d-flex align-items-center">
-                                    <input type="checkbox" id="f-option" name="selector">
-                                    <label for="f-option">Remember me</label>
-                                </div>
                                 <button id="loginbutton" class="btn_3" type="submit">
                                     Sign In
                                 </button>

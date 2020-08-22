@@ -1,0 +1,51 @@
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Cập nhật thẻ độc giả</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area mt-5 ">
+    <div class="container d-flex justify-content-center">
+        <form action="/reader/edit/" method="POST" class="col-6">
+            <div class="row">
+                <div class="container ">
+                    <div class="col-12">
+                        <div class="row">
+                            <label class="col-form-label col-1">ID</label>
+                            <input type="text" class="form-control col-1" value="{{reader.id}}" name="id" readonly />
+                        </div>
+                    </div>
+                    <div class="col-12  ">
+                        <label class="col-12 col-form-label">Họ và tên </label>
+                        <input type="text" class="form-control" value="{{reader.fullname}}" name="fullname" required />
+                    </div>
+                    <div class="col-12 ">
+                        <label class="col-12 col-form-label">Ngày sinh</label>
+                        <input type="date" class="form-control" value="{{DateFormat reader.dob}}" name="dob" required />
+                    </div>
+                    <div class="col-12 ">
+                        <label class="col-12 col-form-label">Địa chỉ</label>
+                        <input type="text" class="form-control" value="{{reader.address}}" name="address" />
+                    </div>
+                    <div class="col-12">
+                        <label class="col-12 col-form-label">Email</label>
+                        <input type="email" class="form-control" value="{{reader.email}}" name="email" />
+                    </div>
+                    <div class="col-12 d-flex justify-content-end m-2">
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+{{>footer}}

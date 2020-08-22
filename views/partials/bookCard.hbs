@@ -1,20 +1,15 @@
 <div class="col-lg-4 col-6 mt-10" style="display: bvlock;">
-    <a class="h-100" href="/detail/id">
+    <div class="h-100">
         <div class="card m-auto h-100" style="width: 17rem; background-color: transparent;">
             <div class="card-body">
-                <h5 class="card-title text-center">Name</h5>
+                <div class="text-center"><img class="mb-2"src="{{img}}" style="max-height: 200px;"></div>
                 <p class="card-text">
-                    <p>Tên sách: {{name}}</p>
+                    <h4>{{name}}</h4>
                     <p>Tác giả: {{author}}</p>
                     <p>Năm xuất bản: {{publish_at}}</p>
                     <p>Nhà xuất bản: {{publisher}}</p>
                 </p>
             </div>
-    </a>
-    <a class="favoriteBtn mt-0 card-footer text-center" href="/watchlist/id">
-        {{!-- <i class="fa fa-heart" style="color: red;"></i>
-        <i class="far fa-heart" style="color: red;"></i>
-        <span class="text-danger"> Yêu thích</span> --}}
-    </a>
+    </div>
 </div>
 </div>

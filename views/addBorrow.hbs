@@ -1,0 +1,54 @@
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Thêm thẻ độc giả</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area mt-5 ">
+    <div class="container d-flex justify-content-center">
+        <form action="/reader/add/" method="POST" class="col-6">
+            <div class="row">
+                <div class="container" id="main-form">
+                    <div class="col-12">
+                        <label class="col-12 col-form-label">Nhập email độc giả </label>
+                        <input type="email" class="form-control" required id="email-reader" />
+                        <button type="button" class="btn btn-primary" id="get-reader">xác nhận</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{{#section 'js'}}
+<script>
+    $("#get-reader").click(() => {
+        if ($("#email-reader").val().length != 0)
+            $.get(`/reader/email/${$("#email-reader").val()}`, data => {
+                $("#main-form").html(`
+                <div class="col-12">
+                     <div class="col-12">
+                        <div class="row">
+                            <label class="col-form-label col-12">ID độc giả</label>
+                            <input type="text" class="form-control" value="${data.id}" name="id" readonly />
+                        </div>
+                    </div>
+                    <div class="col-12  ">
+                        <label class="col-12 col-form-label">Họ và tên độc giả</label>
+                        <input type="text" class="form-control" value="${data.name}" name="fullname" readonly />
+                    </div>
+
+                </div>`)
+            })
+
+    })
+</script>
+{{/section}}
+{{>footer}}
