@@ -20,35 +20,103 @@
                     <div class="col-12">
                         <label class="col-12 col-form-label">Nhập email độc giả </label>
                         <input type="email" class="form-control" required id="email-reader" />
-                        <button type="button" class="btn btn-primary" id="get-reader">xác nhận</button>
+                        <button type="button" class="btn btn-primary float-right m-2" id="get-reader">xác nhận</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </section>
+<div class="modal fade" id="book-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nhập id sách</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="number" name="id" id="id-book">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary get-book">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
 {{#section 'js'}}
 <script>
-    $("#get-reader").click(() => {
+    $('#get-reader').click(() => {
         if ($("#email-reader").val().length != 0)
             $.get(`/reader/email/${$("#email-reader").val()}`, data => {
-                $("#main-form").html(`
-                <div class="col-12">
-                     <div class="col-12">
-                        <div class="row">
-                            <label class="col-form-label col-12">ID độc giả</label>
-                            <input type="text" class="form-control" value="${data.id}" name="id" readonly />
+                if (!data.id) alert("Không tìm thấy độc giả!!!");
+                if (data.id)
+                    $("#main-form").html(`<div class="col-12">
+                            <div class="col-12">
+                                    <label class="col-form-label col-12">ID độc giả</label>
+                                    <input type="text" class="form-control" value="${data.id}" name="reader" readonly />
+                                
+                            </div>
+                            <div class="col-12  ">
+                                <label class="col-12 col-form-label">Họ và tên độc giả</label>
+                                <input type="text" class="form-control" value="${data.fullname}" name="fullname" disabled />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12  ">
-                        <label class="col-12 col-form-label">Họ và tên độc giả</label>
-                        <input type="text" class="form-control" value="${data.name}" name="fullname" readonly />
-                    </div>
-
-                </div>`)
+                        <div>
+                                <button type="button" class="btn btn-primary m-2 float-right" data-toggle="modal" data-target="#book-modal">Thêm sách</button>
+                                <div class="table-responsive">
+                                <table id="cart" class="table table-hover table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:5%">#ID</th>
+                                            <th style="width:25%">Tên sách</th>
+                                            <th style="width:20%">Tác giả</th>
+                                            <th style="width:15%">Giá bìa</th>
+                                            <th style="width:5%"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="book-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        `)
             })
-
     })
+    $('.get-book').click(() => {
+        if ($('#id-book').val().length != 0) {
+            $.get(`/book/id/${$("#id-book").val()}`, data => {
+                alert(JSON.stringify(data))
+                if (data.id) {
+                    $("#book-list").append(`
+                        <tr>
+                            <td class="align-middle">${data.id}</td>
+                            <td class="align-middle">${data.name}</td>
+                            <td class="align-middle">${data.author}</td>
+                            <td class="align-middle">${data.price}</td>
+                            <td class="align-middle">
+                                <button type="button" class="btn btn-primary del-book">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                     `)
+                    $('.del-book').click((e) => {
+                        e.target.parentElement.parentElement.remove();
+                    })
+                }
+            })
+        }
+    })
+    $('form').bind("keypress", function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 </script>
+
 {{/section}}
 {{>footer}}

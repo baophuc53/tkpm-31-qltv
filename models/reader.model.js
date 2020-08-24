@@ -12,5 +12,10 @@ module.exports = {
         const condition={id:entity.id}
         delete entity.id
         return db.patch('reader',entity,condition)
+    },
+    single:async(email)=>{
+        res = await db.load(`select * from reader where email=\"${email}\"`);
+        return res[0];
+        
     }
 };
