@@ -1,8 +1,10 @@
 const express = require("express");
 const borrowModel = require("../models/borrow.model");
 const bookModel = require("../models/book.model");
+const borrow_bookModel = require("../models/book.model");
 const paramsModel = require("../models/params.model");
 const moment = require("moment");
+const createHttpError = require("http-errors");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -18,17 +20,17 @@ router.get("/edit/:id", async (req, res) => {
   const borrow_book = await borrowModel.borrowBooksById(req.params.id);
 
   if (borrow.status === "Đang mượn") {
-  borrow.canReturn = true;
-  const timeout = await paramsModel.loadParam("Hạn trả sách");
-  const feePerDay = await paramsModel.loadParam("Tiền quá hạn");
-  const day = moment().diff(borrow.create_at, "day");
+    borrow.canReturn = true;
+    const timeout = await paramsModel.loadParam("Hạn trả sách");
+    const feePerDay = await paramsModel.loadParam("Tiền quá hạn");
+    const day = moment().diff(borrow.create_at, "day");
 
-  if (day > +timeout.value) 
-    fee = (day - timeout.value) * +feePerDay.value;
-  else 
-    fee = 0;
+    if (day > +timeout.value)
+      fee = (day - timeout.value) * +feePerDay.value;
+    else
+      fee = 0;
   } else
-  fee = borrow.fee;
+    fee = borrow.fee;
   res.render("editBorrow", {
     borrow,
     borrow_book,
@@ -38,6 +40,7 @@ router.get("/edit/:id", async (req, res) => {
 
 router.post("/edit", async (req, res) => {
   const reader = req.body;
+  console.log(req.body)
   await readerModel.patch(reader);
   res.redirect("/borrow");
 });
@@ -46,10 +49,42 @@ router.get("/add", (req, res) => {
   res.render("addBorrow");
 });
 
-router.post("/add", async (req, res) => {
-  const reader = req.body;
-  await readerModel.add(reader);
-  res.redirect("/reader");
+router.post("/add", async (req, res,next) => {
+  const borrow = req.body;
+  var book;
+  if (borrow.book)
+    book = borrow.book;
+  else{
+    next(createHttpError("Please input book"))
+    return
+  }
+  delete borrow.book;
+  const blist = [];
+  for (let index = 0; index < book.length; index++) {
+    const element = book[index];
+    const b = await bookModel.single(element)
+    console.log(b);
+    if (b.status != "còn") {
+      next(createHttpError("Invalid book"))
+      return
+    }
+    b.status = "đã mượn"
+    blist.push(b)
+  }
+  await (async () => {
+    for (let index = 0; index < blist.length; index++) {
+      bookModel.patch(blist[index]);
+    }
+    
+  })()
+  borrow.create_at = new Date();
+  const br=await borrowModel.add(borrow)
+  await (async () => {
+    for (let index = 0; index < blist.length; index++) {
+      borrow_bookModel.add({book:blist[index],borrow:br.id});
+    }
+  })()
+  res.redirect("/borrow");
 });
 
 router.post("/return/:id", async (req, res) => {

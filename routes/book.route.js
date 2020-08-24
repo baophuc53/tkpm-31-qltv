@@ -13,12 +13,13 @@ router.get("/add", async (req, res) => {
 
 router.get("/id/:id", async (req, res) => {
   const book = await bookModel.single(req.params.id);
-  console.log(book)
   if (book) {
-    res.json(book);
-    return;
+    if (book.status == "còn") {
+      res.json(book);
+      return;
+    }
   }
-  res.send("not found");
+  res.send("Sách " + (book ? book.status:"Không tìm thấy"));
 });
 
 router.post("/", async (req, res) => {

@@ -14,4 +14,5 @@ module.exports = {
     res = await db.load(`select * from book where id=${id}`);
     return res[0];
   },
+  search: (param) =>db.load(`select * from  book where`)
 };

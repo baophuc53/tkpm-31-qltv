@@ -1,4 +1,5 @@
 const createError = require('http-errors');
+require('express-async-errors')
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -37,26 +38,25 @@ app.engine('hbs', exphbs({
 }));
 
 app.set('view engine', 'hbs');
-
 middleware(app);
-// catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//     next(createError(404));
-// });
 
-// // error handler
-// app.use(async(err, req, res, next) => {
-//     if (!res.locals.lscategory)
-//         res.locals.lscategory = await categoryModel.all();
-//     category = res.locals.lscategory;
-//     // set locals, only providing error in development
-//     res.locals.message = err.message;
-//     res.locals.error = req.app.get('env') === 'development' ? err : {};
-//     // render the error page
-//     errstatus = err.status || 500;
-//     res.status(errstatus);
-//     res.render('error', { category, errstatus });
-// });
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    next(createError(404));
+});
+
+// error handler
+app.use(async(err, req, res, next) => {
+    if (!res.locals.lscategory)
+        res.locals.lscategory = await categoryModel.all();
+    category = res.locals.lscategory;
+    // set locals, only providing error in development
+    console.log(err)
+    // render the error page
+    errstatus = err.status || 500;
+    res.status(errstatus);
+    res.render('error', { category, errstatus,errMessage:err.message||"Oops, something went wrong!!!" });
+});
 
 
 
