@@ -11,7 +11,7 @@
                         <span class="menu_icon"><i class="fas fa-bars"></i></span>
                     </button>
                     <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav d-flex justify-content-end">
                             <li class="nav-item">
                                 <a class="nav-link" href="/">Trang chủ</a>
                             </li>
@@ -27,12 +27,6 @@
                                     {{/each}}
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/book/add" role="button" data-toggle="dropdown "
-                                    aria-haspopup="true" aria-expanded="false">
-                                    Thêm sách
-                                </a>
-                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="/blog" id="navbarDropdown_3" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,23 +34,14 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
                                     {{#if isAuthenticated}}
-                                    {{#switch role}}
-                                    {{#case "ThuThu"}}
-                                    <a class="dropdown-item" href="/readers"> Danh sách độc giả </a>
-                                    <a class="dropdown-item" href="/history-borrow">Lịch sử mượn sách</a>
-                                    {{/case}}
-                                    {{#case "Thukho"}}
+                                    <a class="dropdown-item" href="/admin">Quản lý</a>
+                                    <a class="dropdown-item" href="/reader"> Danh sách độc giả </a>
+                                    <a class="dropdown-item" href="/borrow">Phiếu mượn sách</a>
                                     <a class="dropdown-item" href="/book/add">Thêm sách</a>
-                                    {{/case}}
-                                    {{#default}}
-                                    <a class="dropdown-item" href="/readers"> Danh sách độc giả </a>
-                                    <a class="dropdown-item" href="/history-borrow">Lịch sử mượn sách</a>
-                                    <a class="dropdown-item" href="/book/add">Thêm sách</a>
-                                    {{/default}}
-                                    {{/switch}}
                                     <a class="dropdown-item" href="/logout">Đăng xuất </a>
+
                                     {{else}}
-                                    <a class="dropdown-item" href="/login">Đăng nhập </a>
+                                        <a class="dropdown-item" href="/login">Đăng nhập </a>
                                     {{/if}}
 
                                 </div>
@@ -64,7 +49,7 @@
                         </ul>
                     </div>
                     <div class="hearer_icon d-flex">
-                        <form class="input-group" action="/search" method="GET">
+                        <form class="input-group" action="/book/search" method="GET">
                             <input type="text" class="form-control" placeholder="Search" name="searchKey">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-secondary">

@@ -1,0 +1,45 @@
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Thêm thẻ độc giả</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area mt-5 ">
+    <div class="container d-flex justify-content-center">
+        <form action="/reader/add/" method="POST" class="col-6">
+            <div class="row">
+                <div class="container ">
+                    <div class="col-12  ">
+                        <label class="col-12 col-form-label">Họ và tên </label>
+                        <input type="text" class="form-control" name="fullname" required />
+                    </div>
+                    <div class="col-12 ">
+                        <label class="col-12 col-form-label">Ngày sinh</label>
+                        <input type="date" class="form-control" name="dob" required />
+                    </div>
+                    <div class="col-12 ">
+                        <label class="col-12 col-form-label">Địa chỉ</label>
+                        <input type="text" class="form-control" name="address" />
+                    </div>
+                    <div class="col-12">
+                        <label class="col-12 col-form-label">Email</label>
+                        <input type="email" class="form-control" name="email" />
+                    </div>
+                    <div class="col-12 d-flex justify-content-end m-2">
+                        <button type="submit" class="btn btn-primary">Thêm độc giả</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+{{>footer}}

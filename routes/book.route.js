@@ -11,13 +11,21 @@ router.get("/add", async (req, res) => {
   res.render("addBook");
 });
 
+router.get("/id/:id", async (req, res) => {
+  const book = await bookModel.single(req.params.id);
+  console.log(book)
+  if (book) {
+    res.json(book);
+    return;
+  }
+  res.send("not found");
+});
+
 router.post("/", async (req, res) => {
   const form = new multiparty.Form();
   form.parse(req, async (err, data, file) => {
     if (err != null) {
-      res.render("message", {
-        message: "Failed",
-      });
+      res.render("error");
       return;
     }
 
@@ -25,27 +33,29 @@ router.post("/", async (req, res) => {
       data[key] = data[key][0];
     }
     data.publish_at = +data.publish_at;
-    console.log(data);
 
     const { insertId: id } = await bookModel.add(data);
-
-    fs.writeFile(`public/images/book/${id}.jpg`, file.img[0], async (err) => {
+    fs.rename(file.img[0].path, `public/images/book/${id}.jpg`, async (err) => {
       if (err != null) {
         await bookModel.del({ id });
         console.log(err);
-        res.render("message", {
-          message: "Failed",
-        });
+        res.render("error");
         return;
       }
       await bookModel.patch({
         id: id,
-        img: `/public/images/book/${id}.jpg`,
+        img: `/images/book/${id}.jpg`,
       });
-      res.render("message", {
-        message: "Success",
+      res.render("success", {
+        retUrl: "/book/add",
       });
     });
+  });
+});
+
+router.get("/search", async (req, res) => {
+  res.render("booklist", {
+    book: [],
   });
 });
 

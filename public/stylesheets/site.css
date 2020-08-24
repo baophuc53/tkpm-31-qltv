@@ -222,3 +222,7 @@ body {
     overflow: auto;
     overflow-y: auto;
 }
+
+.align-center{
+    text-align: center;
+}

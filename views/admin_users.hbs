@@ -35,9 +35,7 @@
                                     <tr>
                                         <th>Username</th>
                                         <th>Name</th>
-                                        <th>Status</th>
-                                        <th>Address</th>
-                                        <th>Phone</th>
+                                        <th>Role</th>
                                         <th>Email</th>
                                     </tr>
                                 </thead>
@@ -45,12 +43,10 @@
                                 <tbody>
                                     {{#each this.users}}
                                     <tr>
-                                        <td>{{Username}}</td>
-                                        <td>{{Name}}</td>
-                                        <td>{{UserMode}}</td>
-                                        <td>{{Address}}</td>
-                                        <td>{{Phone}}</td>
-                                        <td>{{Email}}</td>
+                                        <td>{{username}}</td>
+                                        <td>{{fullname}}</td>
+                                        <td>{{role}}</td>
+                                        <td>{{email}}</td>
                                     </tr>
                                     {{/each}}
                                 </tbody>

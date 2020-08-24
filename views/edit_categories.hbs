@@ -4,54 +4,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-            <div class="sidebar-brand-icon">
-                <i class="fas fa-user-cog"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">Admin</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Addons
-        </div>
-
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="/admin/capquyen">
-                <i class="fas fa-user-cog"></i>
-                <span>Phân quyền</span></a>
-        </li>
-
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="/admin/nguoidung">
-                <i class="fas fa-user"></i>
-                <span>Người dùng</span></a>
-        </li>
-
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href="/admin/danhmuc">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Danh mục</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-    </ul>
-    <!-- End of Sidebar -->
+    {{>sidebar}}
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -80,17 +33,17 @@
                         <input type="text" class="form-control" id="txtname" placeholder="Tên danh mục"
                             name="name" value="{{this.category.name}}" autofocus>
                     </div>
-                    <a class="btn btn-outline-primary" href="/admin/danhmuc">
+                    <a class="btn btn-outline-primary" href="/admin/category">
                         <i class="fa fa-backward" aria-hidden="true"></i>
                         List
                     </a>
                     <button type="submit" class="btn btn-outline-primary btn-outline-success"
-                        formaction="/admin/danhmuc/patch">
+                        formaction="/admin/category/patch">
                         <i class="fa fa-check" aria-hidden="true"></i>
                         Save
                     </button>
                     <button type="submit" class="btn btn-outline-primary btn-outline-danger"
-                        formaction="/admin/danhmuc/del">
+                        formaction="/admin/category/del">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                         Delete
                     </button>
@@ -101,14 +54,6 @@
 
         </div>
         <!-- End of Page Wrapper -->
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Online Borrow 2019</span>
-                </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
+       {{>footeradmin}}
     </div>
 </div>

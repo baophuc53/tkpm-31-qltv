@@ -1,0 +1,114 @@
+{{>header}}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <p>Trang chủ/ Phiếu mượn sách</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area mt-5 ">
+    <form action="/borrow/return/{{borrow.id}}" method="POST">
+        <div class="container d-flex justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <div class="container ">
+                        <div class="col-12">
+                            <div class="row">
+                                <label class="col-form-label col-1">ID</label>
+                                <input type="text" class="form-control col-1" value="{{borrow.id}}" name="id"
+                                    readonly />
+                            </div>
+                        </div>
+                        <div class="col-12  ">
+                            <label class="col-12 col-form-label">Họ và tên </label>
+                            <input type="text" class="form-control" value="{{borrow.fullname}}" disabled />
+                        </div>
+                        <div class="row col-12">
+                            <div class="col-6 ">
+                                <label class="col-12 col-form-label">Ngày lập phiếu</label>
+                                <input type="text" class="form-control" value="{{DateFormatShow borrow.create_at}}"
+                                    disabled />
+                            </div>
+                            <div class="col-6 ">
+                                <label class="col-12 col-form-label">Ngày trả</label>
+                                <input type="text" class="form-control" value="{{DateFormatShow borrow.return_at}}"
+                                    disabled />
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="col-12 col-form-label">Tình trạng</label>
+                            <input type="email" class="form-control" value="{{borrow.status}}" disabled />
+                        </div>
+                        {{#if borrow.canReturn}}
+                        <div class="col-12 d-flex justify-content-end m-2">
+                            <button class="btn btn-primary" type="submit">Trả sách</a>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="cart" class="table table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="width:5%">#ID</th>
+                            <th style="width:25%">Tên sách</th>
+                            <th style="width:20%">Tác giả</th>
+                            <th style="width:15%">Giá bìa</th>
+                            <th style="width:5%">Tình trạng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#if borrow.canReturn}}
+                        {{#each borrow_book}}
+                        <tr>
+                            <td class="align-middle">{{id}}</td>
+                            <td class="align-middle">{{name}}</td>
+                            <td class="align-middle">{{author}}</td>
+                            <td class="align-middle">{{price}}</td>
+                            <td class="align-middle">
+                                <input type="checkbox" name="{{id}}" value="{{price}}" class="lost-book">
+                                <label>Mất</label>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        {{else}}
+                        {{#each borrow_book}}
+                        <tr>
+                            <td class="align-middle">{{id}}</td>
+                            <td class="align-middle">{{name}}</td>
+                            <td class="align-middle">{{author}}</td>
+                            <td class="align-middle">{{price}}</td>
+                            <td class="align-middle">{{status}}</td>
+                        </tr>
+                        {{/each}}
+                        {{/if}}
+                        <tr>
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                            <td class="align-middle">Tổng tiền</td>
+                            <td class="align-middle"><input style="max-width: 70px;" id="fee" name="fee" value="{{fee}}" readonly></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</section>
+{{#section 'js'}}
+<script>
+    $(".lost-book").click((e) => {
+        $("#fee").val(+$("#fee").val()+ (+e.target.value))
+        e.target.value = -e.target.value
+    })
+</script>
+{{/section}}
+{{>footer}}

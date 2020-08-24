@@ -15,7 +15,7 @@
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Trang Quản lý Danh mục</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Trang Quản lý Quy định</h1>
 
                 </div>
 
@@ -27,8 +27,7 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Danh sách Danh mục</h6>
-                    <a class="btn btn-primary float-right" href="/admin/category/add"> <i class="fas fa-fw fa-plus"></i> Thêm danh mục</a>
+                        <h6 class="m-0 font-weight-bold text-primary">Danh sách Quy định</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -36,17 +35,19 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Tên danh mục</th>
+                                        <th>Tên quy định</th>
+                                        <th>Giá trị</th>
                                         <th class="text-center">Sửa</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    {{#each this.category}}
+                                    {{#each this.params}}
                                     <tr>
                                         <td>{{id}}</td>
                                         <td>{{name}}</td>
-                                        <td class="text-center"> <a href="/admin/category/edit/{{id}}"><i class="fas fa-fw fa-pen"></i></a></td>
+                                        <td>{{value}}</td>
+                                        <td class="text-center"> <a href="/admin/params/edit/{{id}}"><i class="fas fa-fw fa-pen"></i></a></td>
                                     </tr>
                                     {{/each}}
                                 </tbody>
