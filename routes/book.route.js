@@ -55,8 +55,10 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/search", async (req, res) => {
+  param=req.query.searchKey
+  const book=await bookModel.search(param)
   res.render("booklist", {
-    book: [],
+    book,
   });
 });
 
