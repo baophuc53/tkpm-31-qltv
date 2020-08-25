@@ -7,6 +7,11 @@ const moment = require("moment");
 const createHttpError = require("http-errors");
 const router = express.Router();
 
+router.use((req, res, next) => {
+  if (req.session.role == 'thủ kho')
+    next(createHttpError('Permission denied'))
+  else next()
+})
 router.get("/", async (req, res) => {
   const borrow = await borrowModel.allWithReaderName();
   res.render("borrow", {
@@ -40,7 +45,6 @@ router.get("/edit/:id", async (req, res) => {
 
 router.post("/edit", async (req, res) => {
   const reader = req.body;
-  console.log(req.body)
   await readerModel.patch(reader);
   res.redirect("/borrow");
 });
@@ -63,7 +67,6 @@ router.post("/add", async (req, res,next) => {
   for (let index = 0; index < book.length; index++) {
     const element = book[index];
     const b = await bookModel.single(element)
-    console.log(b);
     if (b.status != "còn") {
       next(createHttpError("Invalid book"))
       return

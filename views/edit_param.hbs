@@ -24,28 +24,23 @@
             <div class="container-fluid">
                 <form method="POST">
                     <div class="form-group">
-                        <label for="txtname">ID</label>
-                        <input type="text" class="form-control" id="txtid" placeholder="ID" name="id"
-                            value="{{this.category.id}}" readonly>
+                        <label >Tên tham số</label>
+                        <input type="text" class="form-control"
+                            value="{{param.name}}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="txtname">Tên danh mục</label>
-                        <input type="text" class="form-control" id="txtname" placeholder="Tên danh mục"
-                            name="name" value="{{this.category.name}}" autofocus>
+                        <label >Giá trị</label>
+                        <input type="number" class="form-control" 
+                            name="value" value="{{param.value}}" autofocus>
                     </div>
-                    <a class="btn btn-outline-primary" href="/admin/category">
+                    <a class="btn btn-outline-primary" href="/admin/param">
                         <i class="fa fa-backward" aria-hidden="true"></i>
                         List
                     </a>
                     <button type="submit" class="btn btn-outline-primary btn-outline-success"
-                        formaction="/admin/category/edit">
+                        formaction="/admin/param/edit/{{param.id}}">
                         <i class="fa fa-check" aria-hidden="true"></i>
                         Save
-                    </button>
-                    <button type="submit" class="btn btn-outline-primary btn-outline-danger"
-                        formaction="/admin/category/del">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                        Delete
                     </button>
                 </form>
             </div>
