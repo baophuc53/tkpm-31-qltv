@@ -53,12 +53,12 @@ router.get("/add", (req, res) => {
   res.render("addBorrow");
 });
 
-router.post("/add", async (req, res,next) => {
+router.post("/add", async (req, res, next) => {
   const borrow = req.body;
   var book;
   if (borrow.book)
     book = borrow.book;
-  else{
+  else {
     next(createHttpError("Please input book"))
     return
   }
@@ -74,19 +74,18 @@ router.post("/add", async (req, res,next) => {
     b.status = "đã mượn"
     blist.push(b)
   }
-  await (async () => {
-    for (let index = 0; index < blist.length; index++) {
-      bookModel.patch(blist[index]);
-    }
-    
-  })()
+  for (let index = 0; index < blist.length; index++) {
+    const id=blist[index].id
+    await bookModel.patch(blist[index]);
+    blist[index].id=id
+  }
+
   borrow.create_at = new Date();
-  const br=await borrowModel.add(borrow)
-  await (async () => {
-    for (let index = 0; index < blist.length; index++) {
-      borrow_bookModel.add({book:blist[index],borrow:br.id});
-    }
-  })()
+  const br = await borrowModel.add(borrow)
+  for (let index = 0; index < blist.length; index++) {
+    console.log(blist[index])
+    await borrow_bookModel.add({ book: blist[index].id, borrow: br.insertId });
+  }
   res.redirect("/borrow");
 });
 
