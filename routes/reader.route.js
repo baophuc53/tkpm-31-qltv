@@ -2,6 +2,12 @@ const express = require("express");
 const readerModel = require("../models/reader.model");
 const router = express.Router();
 
+
+router.use((req, res, next) => {
+  if (req.session.role == 'thủ thư')
+    next(createHttpError('Permission denied'))
+  else next()
+})
 router.get("/", async (req, res) => {
   const reader = await readerModel.all();
   res.render("reader", {

@@ -3,14 +3,16 @@ const bookModel = require("../models/book.model");
 const router = express.Router();
 const multiparty = require("multiparty");
 const fs = require("fs");
+const authMdw = require("../middlewares/auth.mdw");
 
-//
-// xem ds sản phẩm thuộc danh mục :id
 
-router.get("/add", async (req, res) => {
-  res.render("addBook");
+router.get("/search", async (req, res) => {
+  param = req.query.searchKey
+  const book = await bookModel.search(param)
+  res.render("booklist", {
+    book,
+  });
 });
-
 router.get("/id/:id", async (req, res) => {
   const book = await bookModel.single(req.params.id);
   if (book) {
@@ -19,8 +21,20 @@ router.get("/id/:id", async (req, res) => {
       return;
     }
   }
-  res.send("Sách " + (book ? book.status:"Không tìm thấy"));
+  res.send("Sách " + (book ? book.status : "Không tìm thấy"));
 });
+
+
+router.use(authMdw);
+router.use((req, res, next) => {
+  if (req.session.role == 'thủ thư')
+    next(createHttpError('Permission denied'))
+  else next()
+})
+router.get("/add", async (req, res) => {
+  res.render("addBook");
+});
+
 
 router.post("/", async (req, res) => {
   const form = new multiparty.Form();
@@ -39,7 +53,6 @@ router.post("/", async (req, res) => {
     fs.rename(file.img[0].path, `public/images/book/${id}.jpg`, async (err) => {
       if (err != null) {
         await bookModel.del({ id });
-        console.log(err);
         res.render("error");
         return;
       }
@@ -54,12 +67,5 @@ router.post("/", async (req, res) => {
   });
 });
 
-router.get("/search", async (req, res) => {
-  param=req.query.searchKey
-  const book=await bookModel.search(param)
-  res.render("booklist", {
-    book,
-  });
-});
 
 module.exports = router;
