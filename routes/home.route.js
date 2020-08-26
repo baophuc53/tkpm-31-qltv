@@ -45,6 +45,7 @@ router.get('/change-pass', authMdw, async (req, res) => {
     res.render('changepass')
 })
 router.post('/change-pass', authMdw, async (req, res) => {
+    console.log(req.body);
     if (req.body.new_password != req.body.confirm_password) {
         res.render('changepass', {
             err: "Mật khẩu xác nhận không trùng khớp"

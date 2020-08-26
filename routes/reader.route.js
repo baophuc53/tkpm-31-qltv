@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.use((req, res, next) => {
-  if (req.session.role == 'thủ thư')
+  if (req.session.role == 'thủ kho')
     next(createHttpError('Permission denied'))
   else next()
 })
